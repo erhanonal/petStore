@@ -18,19 +18,29 @@ exports.index = function (req, res) {
     });
 };
 // Handle create pet actions
-exports.new = function (req, res) {
+exports.new = async function (req, res) {
     var pet = new Pet();
     pet.name = req.body.name ? req.body.name : pet.name;
-    pet.id = req.body.id;
+    var current = 0;
+    await Pet.countDocuments({  }, function (err, count) {
+    
+       // console.log("Count: "+ count)
+        current = count;
+      });
+    pet._id =  current + 1;
     pet.tags = req.body.tags.replace(/\s/g, "").split(',');
-    console.log("Tags: ")
-    console.log(pet.tags)
+    //console.log("Tags: ")
+    //console.log(pet.name)
+   // console.log(pet._id)
+    //console.log(pet.tags)
     pet.status = req.body.status;
 // save the pet and check for errors
     pet.save(function (err) {
         // Check for validation error
-        if (err)
+        if (err){
             res.json(err);
+            console.log(err);
+        }
         else
             res.json({
                 message: 'New pet created!',
@@ -42,7 +52,7 @@ exports.new = function (req, res) {
 
 // Handle view pet info
 exports.view = function (req, res) {
-    Pet.findOne({ id: req.params['pet_id']}, function (err, pet) {
+    Pet.findOne({ _id: req.params['pet_id']}, function (err, pet) {
         if (err)
             res.send(err);
         res.json({
@@ -55,7 +65,7 @@ exports.view = function (req, res) {
 
 // Handle update pet info
 exports.update = function (req, res) {
-    Pet.findOne({ id: req.params['pet_id']}, function (err, pet) {
+    Pet.findOne({ _id: req.params['pet_id']}, function (err, pet) {
         if (err)
             res.send(err);
             pet.name = req.body.name ? req.body.name : pet.name;
@@ -75,7 +85,7 @@ exports.update = function (req, res) {
 };
 // Handle delete pet
 exports.delete = function (req, res) {
-    Pet.deleteOne({id: req.params['pet_id']}, function (err, pet) {
+    Pet.deleteOne({_id: req.params['pet_id']}, function (err, pet) {
         if (err)
             res.send(err);
         res.json({
