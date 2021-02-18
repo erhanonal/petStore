@@ -6,7 +6,7 @@ var petSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    id:  Number,
+    _id:  Number,
     category: String,
     tags: [String],
     status: {
