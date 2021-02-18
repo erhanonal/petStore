@@ -22,7 +22,9 @@ exports.new = function (req, res) {
     var pet = new Pet();
     pet.name = req.body.name ? req.body.name : pet.name;
     pet.id = req.body.id;
-    pet.tags = req.body.tags;
+    pet.tags = req.body.tags.replace(/\s/g, "").split(',');
+    console.log("Tags: ")
+    console.log(pet.tags)
     pet.status = req.body.status;
 // save the pet and check for errors
     pet.save(function (err) {
@@ -58,7 +60,7 @@ exports.update = function (req, res) {
             res.send(err);
             pet.name = req.body.name ? req.body.name : pet.name;
             pet.id = req.body.id;
-            pet.tags = req.body.tags;
+            pet.tags = req.body.tags.replace(/\s/g, "").split(',');
             pet.status = req.body.status;
 // save the contact and check for errors
         pet.save(function (err) {
@@ -79,6 +81,32 @@ exports.delete = function (req, res) {
         res.json({
             status: "success",
             message: 'Pet deleted'
+        });
+    });
+};
+
+
+exports.findByStatus = function(req, res){
+    Pet.find({ status: req.body.status}, function (err, pet) {
+        if (err)
+            res.send(err);
+        res.json({
+            message: 'Listing pets with status',
+            data: pet
+        });
+    });
+};
+
+
+exports.findByTags = function(req, res){
+    Pet.find({ 
+        'tags':{ $in: req.body.tags.replace(/\s/g, "").split(',')}
+    }, function (err, pet) {
+        if (err)
+            res.send(err);
+        res.json({
+            message: 'Listing pets with tags',
+            data: pet
         });
     });
 };
