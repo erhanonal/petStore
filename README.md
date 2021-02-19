@@ -2,8 +2,14 @@ Pet Store API
 
 How to use?
 
-git clone
+git clone <development-branch>
 
 npm install
 
-node index.js
+To run the server:
+npm start
+
+To test: 
+npm test
+
+
