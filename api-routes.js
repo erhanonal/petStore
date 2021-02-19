@@ -27,7 +27,6 @@ router.route('/pets/findByTags')
 router.route('/pets/:pet_id')
     .get(petController.view)
     .patch(petController.update)
-    .put(petController.update)
     .delete(petController.delete);
 
 
