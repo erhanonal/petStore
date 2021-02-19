@@ -2,7 +2,7 @@ Pet Store API
 
 How to use?
 
-git clone <development-branch>
+git clone -development-branch-
 
 npm install
 
