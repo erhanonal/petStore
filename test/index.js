@@ -20,62 +20,63 @@ describe('Pets', () => {
            done();
         });
     });
-});    
 
 
-//TEST the POST route
-describe('/POST pets', () => {
-  
-  it('it should not POST a pet without names field',  (done) => {
-      let pet = {
-          category: "Dog",
-          tags: ["puppy", "brown"],
-          status: "sold"
-      }
-    chai.request(server)
-        .post('/api/pets')
-        .send(pet)
-        .end((err, res) => {
-              res.should.have.status(405);
-              res.body.err.should.have.property('name')
-          done();
-        });
-  });
-  it('it should POST a pet ', (done) => {
+
+  //TEST the POST route
+  describe('/POST pets', () => {
+    
+    it('it should not POST a pet without names field',  (done) => {
         let pet = {
-          name : "Rex",
-          category: "Dog",
-          tags: ["puppy", "brown"]
-        
-      }
-    chai.request(server)
-        .post('/api/pets')
-        .send(pet)
-        .end((err, res) => {
-            res.should.have.status(201);
-            res.body.should.have.property('message').eql('Successful operation');
-            res.body.should.be.a('object');
-            res.body.pet.should.have.property('name').eql('Rex');
-        done();
-        });
-  });
-});
-
-
-
-/*
-  * Test the /GET route
-  */
-describe('/GET pets', () => {
-  it('it should GET all the pets', (done) => {
-    chai.request(server)
-        .get('/api/pets')
-        .end((err, res) => {
-              res.should.have.status(200);
-              res.body.should.have.property('message').eql("OK");
+            category: "Dog",
+            tags: ["puppy", "brown"],
+            status: "sold"
+        }
+      chai.request(server)
+          .post('/api/pets')
+          .send(pet)
+          .end((err, res) => {
+                res.should.have.status(405);
+                res.body.err.should.have.property('name')
+            done();
+          });
+    });
+    it('it should POST a pet ', (done) => {
+          let pet = {
+            name : "Rex",
+            category: "Dog",
+            tags: ["puppy", "brown"]
+          
+        }
+      chai.request(server)
+          .post('/api/pets')
+          .send(pet)
+          .end((err, res) => {
+              res.should.have.status(201);
+              res.body.should.have.property('message').eql('Successful operation');
+              res.body.should.be.a('object');
+              res.body.pet.should.have.property('name').eql('Rex');
           done();
-        });
+          });
+    });
+
+    
   });
+
+  /*
+    * Test the /GET route
+    */
+  describe('/GET pets', () => {
+    it('it should GET all the pets', (done) => {
+      chai.request(server)
+          .get('/api/pets')
+          .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.have.property('message').eql("OK");
+            done();
+          });
+    });
+  });    
+
+
 });    
-
-
