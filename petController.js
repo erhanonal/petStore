@@ -28,7 +28,8 @@ exports.new = async function (req, res) {
         current = count;
       });
     pet._id =  current + 1;
-    pet.tags = req.body.tags.replace(/\s/g, "").split(',');
+ 
+    pet_tags = req.body.tags
     //console.log("Tags: ")
     //console.log(pet.name)
    // console.log(pet._id)
@@ -38,14 +39,10 @@ exports.new = async function (req, res) {
     pet.save(function (err) {
         // Check for validation error
         if (err){
-            res.json(err);
-            console.log(err);
+            res.status(405).send(err);
         }
         else
-            res.json({
-                message: 'New pet created!',
-                data: pet
-            });
+            res.status(201).send('New pet created!')
     });
 };
 
@@ -70,7 +67,8 @@ exports.update = function (req, res) {
             res.send(err);
             pet.name = req.body.name ? req.body.name : pet.name;
             pet.id = req.body.id;
-            pet.tags = req.body.tags.replace(/\s/g, "").split(',');
+         //   pet.tags = req.body.tags.toString().replace(/\s/g, "").split(',');
+             pet.tags = req.body.tags;
             pet.status = req.body.status;
 // save the contact and check for errors
         pet.save(function (err) {
@@ -83,6 +81,8 @@ exports.update = function (req, res) {
         });
     });
 };
+
+
 // Handle delete pet
 exports.delete = function (req, res) {
     Pet.deleteOne({_id: req.params['pet_id']}, function (err, pet) {
@@ -110,7 +110,7 @@ exports.findByStatus = function(req, res){
 
 exports.findByTags = function(req, res){
     Pet.find({ 
-        'tags':{ $in: req.body.tags.replace(/\s/g, "").split(',')}
+        'tags':{ $in: req.body.tags}
     }, function (err, pet) {
         if (err)
             res.send(err);
