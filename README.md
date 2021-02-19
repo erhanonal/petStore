@@ -1,15 +1,30 @@
-Pet Store API
 
-How to use?
 
-git clone -development-branch-
+## Pet Store API
 
-npm install
 
-To run the server:
-npm start
+### Prerequisites
 
-To test: 
-npm test
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
+
+### Installation
+
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/erhanonal/petStore.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Run the server or test
+   ```sh
+   npm start
+   npm test
+   ```
 
 
