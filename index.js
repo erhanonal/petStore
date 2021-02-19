@@ -38,6 +38,7 @@ app.get('/', (req, res) => res.send('Hello World with Express'));
 // Use Api routes in the App
 app.use('/api', apiRoutes);
 // Launch app to listen to specified port
-app.listen(port, function () {
-    console.log("Running RestHub on port " + port);
+var server = app.listen(port, function () {
+    console.log("Running Pet Store API on port " + port);
 });
+module.exports = server
