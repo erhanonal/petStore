@@ -30,5 +30,18 @@ router.route('/pets/:pet_id')
     .delete(petController.delete);
 
 
+var storeController = require('./storeController')
+
+router.route('/store/inventory')
+    .get(storeController.index)
+
+router.route('/store/order')
+    .post(storeController.new)
+
+router.route('/store/order/:orderId')
+    .get(storeController.view)
+    .patch(storeController.update)
+    .delete(storeController.delete);
+
 // Export API routes
 module.exports = router;
