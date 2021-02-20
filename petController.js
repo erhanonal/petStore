@@ -10,10 +10,7 @@ Pet = require('./petModel');
  exports.new = async function (req, res) {
     var pet = new Pet();
     pet.name = req.body.name ? req.body.name : pet.name;
-    var current = 0;
-    await Pet.countDocuments({  }, function (err, count) {
-        current = count;
-      });
+    var current = await Pet.countDocuments({  })
     pet._id =  current + 1;
  
     pet_tags = req.body.tags
